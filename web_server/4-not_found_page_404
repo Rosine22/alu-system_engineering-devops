@@ -2,17 +2,16 @@
 # Configure Nginx server so that /redirect_me is redirecting to another page
 
 sudo apt-get update -y
-sudo apt-get install nginx -y
-sudo touch /var/www/html/index.html
-sudo touch /var/www/html/Custom-404.html
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/Custom-404.html
-sudo vi /etc/nginx/sites-enabled/default
-
-server {
+config=\
+"server {
         listen 80 default_server;
         listen [::]:80 default_server;
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
+	error_page 404 /Custom-404.html;
 	server_name _;
 	location / {
 		try_files \$uri \$uri/ =404;
