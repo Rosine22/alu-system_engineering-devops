@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
-# Command to make an nginx server listen on port 80, shorter version
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-pkill -1 nginx
+#Running enginx as enginx
+sudo chmod -R 755 /etc/nginx/
+sudo pkill -9 apache2
+sudo sed -i 's/8080/8081/g' /etc/apache2/ports.conf
+sudo service apache2 restart
+su nginx -c "sed -i 's/80/8080/g' /etc/nginx/sites-enabled/default"
+su nginx service nginx restart
